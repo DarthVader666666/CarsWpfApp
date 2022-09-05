@@ -1,22 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Text.RegularExpressions;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
-
 
 namespace CarsWpfApp
 {
@@ -47,7 +36,6 @@ namespace CarsWpfApp
         }
     }
 
-    // сортировка по марке
     public class SortByBrand : IComparer<Cars>
     {
         public bool Flag { get; set; }
@@ -69,7 +57,6 @@ namespace CarsWpfApp
         }
     }
 
-    // сортировка по дате выпуска
     public class SortByDate : IComparer<Cars>
     {
         public bool Flag { get; set; }
@@ -104,8 +91,6 @@ namespace CarsWpfApp
             listViewOne.ItemsSource = cars.carsCollection;            
         }
 
-        // События вызова сортировщика
-        // по модели
         private void sortByModel_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (listViewOne.Items.Count > 0)
@@ -115,7 +100,7 @@ namespace CarsWpfApp
                 listViewOne.ItemsSource = cars.carsCollection;
             }
         }
-        // по марке
+
         private void sortByBrand_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (listViewOne.Items.Count > 0)
@@ -136,7 +121,6 @@ namespace CarsWpfApp
             }
         }
 
-        // Ввод в поиск
         private void searchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             Regex reg = new Regex((sender as TextBox).Text,RegexOptions.IgnoreCase);
@@ -152,7 +136,6 @@ namespace CarsWpfApp
             listViewOne.ItemsSource = cars1;
         }
 
-        // Добавить
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             AddItemWindow addWindow = new AddItemWindow();
@@ -167,11 +150,8 @@ namespace CarsWpfApp
             }
         }
 
-        // Удалить
         private void DelButton_Click(object sender, RoutedEventArgs e)
         {
-            //var collection = listViewOne.ItemsSource as ObservableCollection<Cars>;
-            //cars.carsCollection.Remove(listViewOne.SelectedItems as Cars);
             m1:
             try
             {
@@ -191,9 +171,8 @@ namespace CarsWpfApp
             listViewOne_GotFocus(listViewOne, null);
         }
 
-        // Изменить
         /// <summary>
-        /// 
+        /// ChangeButton_Click.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -224,7 +203,6 @@ namespace CarsWpfApp
             listViewOne_SelectionChanged(listViewOne.SelectedItem, null);
         }
 
-        // загрузить из файла
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
@@ -237,7 +215,6 @@ namespace CarsWpfApp
             }
         }
 
-        // Save as
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
             try
@@ -257,7 +234,6 @@ namespace CarsWpfApp
                 cars.SaveFile(saveDialog.FileName, listViewOne.ItemsSource as ObservableCollection<Cars>);
         }
 
-        // Save
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
             MessageBoxResult mbr = 
@@ -267,7 +243,6 @@ namespace CarsWpfApp
                 cars.SaveFile(DataContext.ToString(), listViewOne.ItemsSource as ObservableCollection<Cars>);
         }
 
-        // статус кнопок Изменить и Удалить
         private void listViewOne_GotFocus(object sender, RoutedEventArgs e)
         {
             if (listViewOne.SelectedItem == null)
@@ -286,7 +261,6 @@ namespace CarsWpfApp
             }   
         }
 
-        // событие выбора строки в списке
         private void listViewOne_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DelButton.IsEnabled = true;
